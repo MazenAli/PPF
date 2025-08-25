@@ -1,0 +1,55 @@
+name: Rust CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout repo
+    - uses: actions/checkout@v3
+
+    # 2. Install Rust toolchain with fmt and clippy
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+
+    # 3. Build library and examples
+    - name: Build All Targets
+      run: cargo build --all-targets
+
+    # 4. Run all tests (unit + integration + examples)
+    - name: Run Tests
+      run: cargo test --all-targets --all-features
+    - name: Run Examples
+      run: cargo test --examples
+
+    # 5. Check formatting
+    - name: Check Formatting
+      run: cargo fmt --all -- --check
+
+    # 6. Run Clippy for lints
+    - name: Clippy Lint
+      run: cargo clippy --all-targets --all-features -- -D warnings
+
+    # 7. Security audit of dependencies
+    - name: Cargo Audit
+      run: |
+        cargo install cargo-audit || true
+        cargo audit
+
+    # 8. Build documentation
+    - name: Build Documentation
+      run: cargo doc --no-deps --document-private-items
+
+    # 9. Dry-run package check
+    - name: Dry Run Publish
+      run: cargo publish --dry-run

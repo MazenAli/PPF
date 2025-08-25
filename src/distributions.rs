@@ -1,7 +1,6 @@
 use rand::Rng;
 use rand_distr::Distribution as RandDistribution;
 
-
 pub trait Distribution {
     fn sample<R: Rng>(&self, rng: &mut R) -> f64;
     fn log_prob(&self, x: f64) -> f64;
@@ -29,7 +28,6 @@ impl Distribution for Normal {
         -0.5 * ((x - self.mu).powi(2) / var + var.ln() + (2.0 * std::f64::consts::PI).ln())
     }
 }
-
 
 #[cfg(test)]
 mod tests {
