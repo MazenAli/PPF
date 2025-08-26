@@ -4,11 +4,11 @@ A toy probabilistic programming library written in Rust for learning about Bayes
 
 ## What's Included
 
-- **Basic Distributions**: Normal, Exponential, and Inverse-Gamma with sampling and log-probability evaluation
-- **Simple Model Definition**: Define models using closures that return log-probabilities  
-- **Metropolis-Hastings Sampler**: Basic MCMC implementation for posterior sampling
-- **Sample Analysis**: Compute means, standard deviations, and quantiles from MCMC output
-- **Examples**: A few working examples of Bayesian inference problems
+- **Basic Distributions**: Normal, Exponential, and Inverse-Gamma with sampling and log-probability evaluation.
+- **Simple Model Definition**: Define models using closures that return log-probabilities.
+- **Metropolis-Hastings Sampler**: Basic MCMC implementation for posterior sampling.
+- **Sample Analysis**: Compute means, standard deviations, and quantiles from MCMC output.
+- **Examples**: A few working examples of Bayesian inference problems.
 
 ## Quick Start
 
@@ -124,15 +124,15 @@ cargo clippy
 ## Limitations
 
 This is a learning project with many limitations:
-- Only three basic distributions
-- Just one MCMC algorithm (Metropolis-Hastings)
-- No convergence diagnostics beyond acceptance rate
-- Limited to continuous parameters
-- No automatic differentiation or gradient-based methods
-- Not optimized for performance
+- Only three basic distributions.
+- Just one MCMC algorithm (Metropolis-Hastings).
+- No convergence diagnostics beyond acceptance rate.
+- Limited to continuous parameters.
+- No automatic differentiation or gradient-based methods.
+- Not optimized for performance.
 
 For real work, consider mature libraries like PyMC, Stan, or Turing.jl.
 
 ## License
 
-MIT License - see LICENSE file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
