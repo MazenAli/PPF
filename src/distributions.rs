@@ -146,6 +146,104 @@ impl Distribution for Normal {
     }
 }
 
+/// Exponential distribution with rate parameter λ.
+///
+/// The exponential distribution is a continuous probability distribution often used
+/// to model waiting times or lifetimes. It is characterized by its memoryless property
+/// and is commonly used as a prior for positive scale parameters.
+///
+/// # Mathematical Definition
+/// The probability density function is:
+/// ```text
+/// f(x) = λ * exp(-λx) for x ≥ 0
+/// ```
+///
+/// # Examples
+/// ```
+/// use ppf::distributions::{Distribution, Exponential};
+/// use rand::rng;
+///
+/// // Exponential with rate 1.0 (mean = 1.0)
+/// let exp = Exponential::new(1.0);
+///
+/// // Sample from the distribution
+/// let mut rng = rng();
+/// let sample = exp.sample(&mut rng);
+///
+/// // Evaluate log probability (only positive values allowed)
+/// let log_prob = exp.log_prob(2.0);
+/// ```
+#[derive(Debug, Clone)]
+pub struct Exponential {
+    /// Rate parameter (λ) of the distribution
+    rate: f64,
+}
+
+impl Exponential {
+    /// Create a new exponential distribution with given rate parameter.
+    ///
+    /// # Arguments
+    /// * `rate` - The rate parameter (λ) of the distribution, must be positive
+    ///
+    /// # Panics
+    /// This function will panic if `rate <= 0.0` as the rate parameter must be positive.
+    ///
+    /// # Examples
+    /// ```
+    /// use ppf::distributions::Exponential;
+    ///
+    /// // Exponential with rate 1.0 (mean = 1.0)
+    /// let exp1 = Exponential::new(1.0);
+    ///
+    /// // Exponential with rate 2.0 (mean = 0.5)
+    /// let exp2 = Exponential::new(2.0);
+    /// ```
+    pub fn new(rate: f64) -> Self {
+        assert!(rate > 0.0, "Rate parameter must be positive, got {}", rate);
+        Exponential { rate }
+    }
+
+    /// Get the rate parameter of the distribution.
+    ///
+    /// # Returns
+    /// The rate parameter (λ) of the exponential distribution
+    pub fn rate(&self) -> f64 {
+        self.rate
+    }
+
+    /// Get the mean of the distribution.
+    ///
+    /// # Returns
+    /// The mean (1/λ) of the exponential distribution
+    pub fn mean(&self) -> f64 {
+        1.0 / self.rate
+    }
+
+    /// Get the variance of the distribution.
+    ///
+    /// # Returns
+    /// The variance (1/λ²) of the exponential distribution
+    pub fn variance(&self) -> f64 {
+        1.0 / (self.rate * self.rate)
+    }
+}
+
+impl Distribution for Exponential {
+    fn sample<R: Rng>(&self, rng: &mut R) -> f64 {
+        // Use inverse transform sampling: if U ~ Uniform(0,1), then -ln(U)/λ ~ Exp(λ)
+        let u: f64 = rng.random();
+        -u.ln() / self.rate
+    }
+
+    fn log_prob(&self, x: f64) -> f64 {
+        if x < 0.0 {
+            f64::NEG_INFINITY // Exponential is only defined for x ≥ 0
+        } else {
+            self.rate.ln() - self.rate * x
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
