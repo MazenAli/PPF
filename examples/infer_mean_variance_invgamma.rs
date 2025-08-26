@@ -110,7 +110,7 @@ fn main() {
     println!("\n=== PRIOR SPECIFICATION ===");
     println!("μ ~ Normal(0, 10)     [weakly informative]");
     println!("σ² ~ InverseGamma(2, 1) [shape=2, scale=1]");
-    println!("  → Prior mean for σ²: {:.3}", 1.0 / (2.0 - 1.0)); // β/(α-1)
+    println!("  → Prior mean for σ²: {:.3}", 1.0); // β/(α-1) = 1/(2-1) = 1
     println!("  → Conjugate to Normal likelihood");
     println!("Parameterization: [μ, log(σ)] for unconstrained sampling");
 
