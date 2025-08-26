@@ -227,7 +227,7 @@ mod tests {
     #[test]
     fn test_bayesian_inference() {
         // Bayesian inference: normal likelihood with known variance, unknown mean
-        let data = vec![1.0, 1.5, 0.8, 1.2]; // Data centered around 1.0
+        let data = [1.0, 1.5, 0.8, 1.2]; // Data centered around 1.0
         let data_mean = data.iter().sum::<f64>() / data.len() as f64;
         let model = Model::new(move |params: &[f64]| {
             let mu = params[0];

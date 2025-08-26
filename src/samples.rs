@@ -275,7 +275,7 @@ mod tests {
         assert_eq!(samples.quantile(0, 0.0), 1.0); // min
         // For 100 values, the median could be 50 or 51 depending on implementation
         let median = samples.quantile(0, 0.5);
-        assert!(median >= 50.0 && median <= 51.0); // median
+        assert!((50.0..=51.0).contains(&median)); // median
         assert_eq!(samples.quantile(0, 1.0), 100.0); // max
     }
 

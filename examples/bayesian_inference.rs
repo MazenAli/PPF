@@ -4,7 +4,7 @@ use ppf::samplers::*;
 
 fn main() {
     // Data: observed values
-    let data = vec![5.0, 7.0, 4.0, 6.0];
+    let data = [5.0, 7.0, 4.0, 6.0];
 
     // Calculate data mean before moving data into closure
     let data_mean = data.iter().sum::<f64>() / data.len() as f64;

@@ -162,7 +162,7 @@ mod tests {
 
     #[test]
     fn test_bayesian_model() {
-        let data = vec![1.0, 2.0, 3.0];
+        let data = [1.0, 2.0, 3.0];
         let model = Model::new(move |params: &[f64]| {
             let mu = params[0];
             let prior = Normal::new(0.0, 10.0).log_prob(mu);

@@ -5,7 +5,7 @@ use ppf::samplers::*;
 #[test]
 fn test_complete_bayesian_workflow() {
     // This test verifies the complete workflow from model definition to posterior analysis
-    let data = vec![2.1, 1.9, 2.0, 2.2, 1.8];
+    let data = [2.1, 1.9, 2.0, 2.2, 1.8];
     let data_mean = data.iter().sum::<f64>() / data.len() as f64;
 
     // Define Bayesian model: Normal likelihood with Normal prior
@@ -47,7 +47,7 @@ fn test_complete_bayesian_workflow() {
 #[test]
 fn test_model_with_multiple_parameters() {
     // Test a model with multiple parameters (mean and precision)
-    let data = vec![1.0, 2.0, 1.5, 1.8, 2.2];
+    let data = [1.0, 2.0, 1.5, 1.8, 2.2];
     let data_mean = data.iter().sum::<f64>() / data.len() as f64;
 
     let model = Model::new(move |params: &[f64]| {
@@ -127,7 +127,7 @@ fn test_samples_statistical_methods() {
     assert_eq!(samples.quantile(0, 0.0), 1.0); // min
     assert_eq!(samples.quantile(0, 1.0), 5.0); // max
     let median = samples.quantile(0, 0.5);
-    assert!(median >= 3.0 && median <= 3.0); // median should be 3
+    assert!(median == 3.0); // median should be 3
 
     // Test get_param
     assert_eq!(samples.get_param(0), vec![1.0, 2.0, 3.0, 4.0, 5.0]);
@@ -137,7 +137,7 @@ fn test_samples_statistical_methods() {
 #[test]
 fn test_target_api_compatibility() {
     // This test exactly matches the target API from the original request
-    let data = vec![5.0, 7.0, 4.0, 6.0];
+    let data = [5.0, 7.0, 4.0, 6.0];
     let data_mean = data.iter().sum::<f64>() / data.len() as f64;
 
     // Define a model: Normal likelihood with unknown mean
